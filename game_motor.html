@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game motor</title>
+
+    <link rel="stylesheet" href="game_motor.css">
+    <script src="classObject.js"></script>
+
+</head>
+<body >
+
+<table id="table1" style="margin: auto">
+    <tr>
+        <td style="border: none;background-color: rgba(222,184,135,0)"><div id="game"></div></td>
+        <td style="border: none;background-color: rgba(222,184,135,0)" id="tdScore">
+            <div id="scordBoard"></div>
+        </td>
+    </tr>
+</table>
+<script src="GameBoard.js"></script>
+<script>
+
+
+    const GAMEBOARD_WIDTH = 400;
+    const GAMEBOARD_HEIGHT = 650;
+    const MOTOR_WIDTH =40;
+    const MOTOR_HEIGHT = 60;
+    const OBSTACLE_WIDTH = 80;
+    const OBSTACLE_HEIGHT = 10;
+    const OIL_WIDTH = 30;
+    const OIL_HEIGHT = 30;
+    const DEFAULT_MOTOR_X_POSITION = 200;
+    const DEFAULT_MOTOR_Y_POSITION = 550;
+    const DEFAULT_MOTOR_SPEED = 20;
+    const STEP=5
+
+
+    let oilImage= "oil.png"
+    let ctx
+    let countObs // đếm chướng ngại vật
+    let countOil // đêm dầu thu thập được
+    let  intervalID=-1;
+    let checkImpactObstacle;
+    let motor1;
+    let background1;
+    let obstacle1;
+    let obstacleCar1;
+    let obstacleCar2;
+    let oil1;
+    let gameBoard1;
+    let player="";
+    function introStartGame() {
+        let textStart = "<h1>Obstacle Game</h1>";
+        textStart += "<img src='images/3295243.png'><br>"
+        textStart +="<div id='player'><label></label><input placeholder='Player Name' id='playerName' type='text'></div>";
+        textStart += "<h2>Are you ready?</h2>";
+        let playButton = "<button id='play' onclick='playButton()'></button>";
+        document.getElementById("game").innerHTML = textStart + playButton;
+
+    }
+    introStartGame()
+    function introEndGame(){
+        let textEnd = "<h1>Obstacle Game</h1>";
+        textEnd += "<img src='images/car-accident.png'>"
+        textEnd+=`<h2 id="scoreEnd">Obstacle: ${countObs},    Oil:${countOil}</h2>`
+        textEnd += "<h2>Play again ?</h2>";
+        let back="<button id='yesButton' onclick='restartButton()'></button>";
+        let stop="<button id='noButton' onclick='introStartGame()'></button>";
+        document.getElementById("game").innerHTML =textEnd+ back+stop
+        document.getElementById("tdScore").style.display="block"
+    }
+    function restartButton(){
+        document.getElementById("tdScore").style.display="none"
+        runGame();
+    }
+    function playButton(){
+        document.getElementById("tdScore").style.display="none"
+
+        player=document.getElementById("playerName").value
+
+        runGame();
+    }
+    function runGame(){
+        checkImpactObstacle=false;
+        countObs=0
+        countOil=0
+        let xObstacle1=Math.random()*300
+        let yObstacle1=20
+        let xObstacle2=Math.random()*300
+        let yObstacle2=100
+        let xObstacle3=Math.random()*300
+        let yObstacle3=200
+        let xOil=40+Math.random()*300
+        let yOil=30+Math.random()*100
+        obstacle1 = new Obstacle(xObstacle1, yObstacle1, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",STEP);
+        obstacleCar1 = new Obstacle(xObstacle2,  yObstacle2, 60, 40,"Rock.png",STEP);
+        obstacleCar2 = new Obstacle(xObstacle3,  yObstacle3, 50, 50,"Bush.png",STEP);
+        motor1 = new Motor(DEFAULT_MOTOR_X_POSITION, DEFAULT_MOTOR_Y_POSITION, DEFAULT_MOTOR_SPEED);
+        background1 = new Background(0, 0, STEP);
+        let obstacleArr=[obstacle1,obstacleCar1,obstacleCar2 ]
+        oil1= new Oil(xOil, yOil, OIL_WIDTH, OIL_HEIGHT,oilImage,STEP);
+        gameBoard1 = new GameBoard(background1,motor1,obstacleArr,oil1);
+        let gameCanvas= `<canvas id="gameCanvas" width="${GAMEBOARD_WIDTH}px" height="${GAMEBOARD_HEIGHT}"></canvas>`
+        document.getElementById("game").innerHTML = gameCanvas;
+        ctx=document.getElementById("gameCanvas").getContext("2d");
+        gameBoard1.startGame(ctx);
+        setTimeout(countdow1,1000);
+        setTimeout(countdow2,2000);
+        setTimeout(countdow3,3000);
+        setTimeout(countdow4,4000);
+        setTimeout(setime,5000);
+    }
+
+
+    function countdow1(){
+        let image = new Image()
+        image.src = './images/' + "countdown1.png";
+        image.onload = function () {
+            ctx.drawImage(image, 150,300,100 , 100);
+        }
+    }
+
+    function countdow2(){
+        let image = new Image()
+        image.src = './images/' + "countdown2.png";
+        image.onload = function () {
+            ctx.drawImage(image, 150,300,100 , 100);
+        }
+    }
+
+    function countdow3(){
+        let image = new Image()
+        image.src = './images/' + "countdown3.png";
+        image.onload = function () {
+            ctx.drawImage(image, 150,300,100 , 100);
+        }
+    }
+    function countdow4(){
+        let image = new Image()
+        image.src = './images/' + "Start.png";
+        image.onload = function () {
+            ctx.drawImage(image, 100,300,200 , 100);
+        }
+    }
+    document.addEventListener("keydown",keycode)
+    function keycode(){
+        motor1.move(event)
+    }
+
+    function setime(){
+        intervalID =requestAnimationFrame(runframe);
+    }
+    function runframe() {
+        gameBoard1.reload(ctx)
+        intervalID =requestAnimationFrame(runframe);
+        if (checkImpactObstacle===true){
+            cancelAnimationFrame(intervalID)
+        }
+    }
+
+function DisplayScoresBoard() {
+    let rankLength = localStorage.length
+    let tableScoreBoard = '<table id="rank" style="margin-top: 100px "> <caption><b>Rankings</b></caption> '
+    tableScoreBoard += '<tr> <th  style="width: 50px">Rank</th>'
+    tableScoreBoard += '<th style="width: 200px">Name</th>'
+    tableScoreBoard += ' <th style="width: 100px">Obstacle</th>'
+    tableScoreBoard += ' <th style="width: 50px">Oil</th>'
+    tableScoreBoard += ' </tr>'
+    let name = []
+    let nameSort=[]
+    let nameSort2=[]
+    let obs = []
+    let obsSort=[]
+    let obsSort2=[]
+    let tempObs=[]
+    let oil = []
+    let oilSort=[]
+    let oilSort2=[]
+    let tempOil=[]
+    let rank = []
+
+    for (let i = 0; i < rankLength; i++) {
+        let playerName = localStorage.key(i)
+        let scores = localStorage.getItem(playerName);
+        name[i] = playerName;
+        obs[i] = scores.slice(0, scores.indexOf(','));
+        tempObs[i]=scores.slice(0, scores.indexOf(','));
+        oil[i] = scores.slice(scores.indexOf(',') + 1, scores.length);
+        tempOil[i]= scores.slice(scores.indexOf(',') + 1, scores.length);
+        rank[i] = i + 1
+    }
+//Săp xếp theo số lượng chướng ngại vật
+    tempObs.sort((a, b) => a - b);
+    for(let i=0;i< tempObs.length;i++){
+        for (let j=i+1;j< tempObs.length;j++) {
+            if ( tempObs[i] ===  tempObs[j]) {
+                tempObs.splice(j, 1)
+                j--;
+            }
+        }
+    }
+
+    for (let i = 0; i < tempObs.length; i++) {
+        for(let j=0;j < obs.length; j++) {
+            if ( tempObs[i]===obs[j]) {
+                obsSort.push(obs[j])
+                nameSort.push(name[j])
+                oilSort.push(oil[j])
+            }
+        }
+    }
+
+    // Sắp xếp theo số dầu thu thâp được
+    tempOil.sort((a, b) => a - b);
+    for(let i=0;i< tempOil.length;i++){
+        for (let j=i+1;j< tempOil.length;j++) {
+            if ( tempOil[i] ===  tempOil[j]) {
+                tempOil.splice(j, 1)
+                j--;
+            }
+        }
+    }
+
+    for (let i = 0; i < tempOil.length; i++) {
+        for(let j=0;j < oilSort.length; j++) {
+            if ( tempOil[i]===oilSort[j]) {
+                obsSort2.push(obsSort[j])
+                nameSort2.push(nameSort[j])
+                oilSort2.push(oilSort[j])
+            }
+        }
+    }
+
+//In ra top 5 người chơi giỏi nhất
+    if (oilSort2.length>5){
+        localStorage.removeItem(nameSort2[nameSort2.length-1]);
+    }
+    for (let i = 0; i < oilSort.length; i++) {
+        tableScoreBoard += "<tr> <td>" + rank[i] + "</td>"
+        tableScoreBoard += "<td>" + nameSort2[oilSort2.length-i-1] + " </td>"
+        tableScoreBoard += "<td>" + obsSort2[oilSort2.length-i-1] + " </td>"
+        tableScoreBoard += "<td>" + oilSort2[oilSort2.length-i-1] + " </td>"
+        tableScoreBoard += ' </tr>'
+    }
+    tableScoreBoard += '</table>'
+    document.getElementById("scordBoard").innerHTML = tableScoreBoard
+}
+
+    DisplayScoresBoard()
+</script>
+</body>
+</html>

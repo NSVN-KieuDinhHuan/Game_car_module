@@ -1,0 +1,126 @@
+body{
+    font-family: Roboto;
+    background: #373B44;
+    background: -webkit-linear-gradient(to right, #72e811, #373B44);
+    background: linear-gradient(to right, #72e811, #373B44);
+
+
+}
+#game{
+    margin-top: 10px;
+    width: 400px;
+    height: 650px;
+    text-align: center;
+    background-color: #eaedef;
+    border-radius: 10px;
+}
+#scordBoard{
+    width: 500px;
+    height: 650px;
+    text-align: center;
+}
+
+#rank{
+    border: 2px solid #121315;
+    border-collapse: collapse;
+    font-family: arial, sans-serif;
+    width: 100%;
+}
+td{
+    text-align: center;
+    border: 1px solid #121315;
+    padding: 10px;
+    background-color: #d5f5ea;
+}
+
+th{
+    text-align: center;
+    border: 2px solid #121315;
+    padding: 10px;
+    background-color: gold;
+}
+#gameCanvas{
+    background-color: #eaedef;
+    margin:0 auto;
+    position:relative;
+    border: rgba(255, 255, 255, 0);
+    border-radius: 10px;
+
+}
+#play{
+    position:relative;
+    background:url(/images/playButton.png) no-repeat;
+    background-size: 50px;
+    top: 100px;
+    left:0px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 20px
+}
+#noButton{
+    position:relative;
+    background:url(/images/noButton.png) no-repeat;
+    background-size: 50px;
+    top: 100px;
+    left:40px;
+    width: 50px;
+    height: 30px;
+    border: none;
+
+}
+#yesButton{
+    position:relative;
+    background:url(/images/yesButton.png) no-repeat;
+    background-size: 50px;
+    top: 100px;
+    left: -40px;
+    width: 50px;
+    height:30px;
+    border: none;
+
+}
+#play:active,#stop:active,#restart:active{
+    background-size: 60px;
+    width: 60px;
+    height: 60px;
+}
+
+h2{position:relative;
+    top: 100px;
+    color: black;
+}
+h1{
+    position:relative;
+    top: 100px;
+    color: #003cff;
+    font-variant: all-petite-caps;
+
+}
+caption{
+    font-size: 30px;
+    color: red;
+
+
+}
+#scoreEnd{
+    border: 2px solid #000000;
+    width:300px;
+    text-align: center;
+    left: 50px;
+    color: red;
+    border-radius: 20px;
+
+}
+img {
+    position:relative;
+    top: 100px;
+    left: 0px;
+    width: 150px;
+
+}
+
+#player{
+    position:relative;
+    top: 100px;
+}
