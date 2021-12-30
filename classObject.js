@@ -2,7 +2,6 @@ class Motor {
     xPosititon;
     yPosition;
     speed;
-
     constructor(xPosititon, yPosition, speed) {
         this.xPosititon = xPosititon;
         this.yPosition = yPosition;
@@ -50,26 +49,43 @@ class Motor {
 
 
 class Background {
-    xPosition;
-    yPosition;
-    _step;
-    constructor( xPosition, yPosition, step) {
+    _xPosition;
+    _yPosition;
+    _speed;
+    constructor( xPosition, yPosition, speed) {
 
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this._step = step;
+        this._xPosition = xPosition;
+        this._yPosition = yPosition;
+        this._speed = speed;
     }
 
-    get step() {
-        return this._step;
+
+    get xPosition() {
+        return this._xPosition;
     }
 
-    set step(value) {
-        this._step = value;
+    set xPosition(value) {
+        this._xPosition = value;
+    }
+
+    get yPosition() {
+        return this._yPosition;
+    }
+
+    set yPosition(value) {
+        this._yPosition = value;
+    }
+
+    get speed() {
+        return this._speed;
+    }
+
+    set speed(value) {
+        this._speed = value;
     }
 
     moveBackground() {
-        this.yPosition += this.step;
+        this.yPosition += this.speed;
         if (this.yPosition >= 0) {
             this.yPosition = -150;
         }
@@ -93,31 +109,16 @@ class Obstacle { //Chướng ngại vật
     _width;
     _height;
     _img
-    _step
-    constructor(x, y, width, height,img,step) {
+    _speed
+    constructor(x, y, width, height,img,speed) {
         this._x = x;
         this._y = y;
         this._width = width;
         this._height = height;
         this._img=img
-        this._step = step;
+        this._speed = speed;
     }
 
-    get img() {
-        return this._img;
-    }
-
-    set img(value) {
-        this._img = value;
-    }
-
-    get step() {
-        return this._step;
-    }
-
-    set step(value) {
-        this._step = value;
-    }
 
     get x() {
         return this._x;
@@ -151,8 +152,24 @@ class Obstacle { //Chướng ngại vật
         this._height = value;
     }
 
+    get img() {
+        return this._img;
+    }
+
+    set img(value) {
+        this._img = value;
+    }
+
+    get speed() {
+        return this._speed;
+    }
+
+    set speed(value) {
+        this._speed = value;
+    }
+
     moveDown() {
-        this._y += this.step;
+        this._y += this._speed;
         if (this._y > GAMEBOARD_HEIGHT) {
                 this._x = Math.random() * 300
                 this._y = 0
@@ -184,22 +201,23 @@ class Oil{// xăn dầu
     _width;
     _height;
     _imageOil
-    _step
-    constructor(x, y, width, height,imageOil,step) {
+    _speed
+    constructor(x, y, width, height,imageOil,speed) {
         this._x = x;
         this._y = y;
         this._width = width;
         this._height = height;
         this._imageOil=imageOil;
-        this._step=step;
+        this._speed=speed;
     }
 
-    get step() {
-        return this._step;
+
+    get speed() {
+        return this._speed;
     }
 
-    set step(value) {
-        this._step = value;
+    set speed(value) {
+        this._speed = value;
     }
 
     get x() {
@@ -244,7 +262,7 @@ class Oil{// xăn dầu
 
 
     moveDown() {
-        this._y += this.step;
+        this._y += this._speed;
         if (this._y > GAMEBOARD_HEIGHT) {
             this._x = 20+Math.random() * 350
             this._y = Math.random() * 100

@@ -33,7 +33,7 @@
     const DEFAULT_MOTOR_X_POSITION = 200;
     const DEFAULT_MOTOR_Y_POSITION = 550;
     const DEFAULT_MOTOR_SPEED = 20;
-    const STEP=5
+    const SPEED=3
 
 
     let oilImage= "oil.png"
@@ -45,8 +45,8 @@
     let motor1;
     let background1;
     let obstacle1;
-    let obstacleCar1;
-    let obstacleCar2;
+    let obstacle2;
+    let obstacle3;
     let oil1;
     let gameBoard1;
     let player="";
@@ -57,7 +57,6 @@
         textStart += "<h2>Are you ready?</h2>";
         let playButton = "<button id='play' onclick='playButton()'></button>";
         document.getElementById("game").innerHTML = textStart + playButton;
-
     }
     introStartGame()
     function introEndGame(){
@@ -93,13 +92,13 @@
         let yObstacle3=200
         let xOil=40+Math.random()*300
         let yOil=30+Math.random()*100
-        obstacle1 = new Obstacle(xObstacle1, yObstacle1, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",STEP);
-        obstacleCar1 = new Obstacle(xObstacle2,  yObstacle2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",STEP);
-        obstacleCar2 = new Obstacle(xObstacle3,  yObstacle3, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",STEP);
+        obstacle1 = new Obstacle(xObstacle1, yObstacle1, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",SPEED);
+        obstacle2 = new Obstacle(xObstacle2,  yObstacle2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",SPEED);
+        obstacle3 = new Obstacle(xObstacle3,  yObstacle3, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",SPEED);
         motor1 = new Motor(DEFAULT_MOTOR_X_POSITION, DEFAULT_MOTOR_Y_POSITION, DEFAULT_MOTOR_SPEED);
-        background1 = new Background(0, 0, STEP);
-        let obstacleArr=[obstacle1,obstacleCar1,obstacleCar2 ]
-        oil1= new Oil(xOil, yOil, OIL_WIDTH, OIL_HEIGHT,oilImage,STEP);
+        background1 = new Background(0, 0, SPEED);
+        let obstacleArr=[obstacle1,obstacle2,obstacle3 ]
+        oil1= new Oil(xOil, yOil, OIL_WIDTH, OIL_HEIGHT,oilImage,SPEED);
         gameBoard1 = new GameBoard(background1,motor1,obstacleArr,oil1);
         let gameCanvas= `<canvas id="gameCanvas" width="${GAMEBOARD_WIDTH}px" height="${GAMEBOARD_HEIGHT}"></canvas>`
         document.getElementById("game").innerHTML = gameCanvas;
@@ -110,6 +109,7 @@
         setTimeout(countdow3,3000);
         setTimeout(countdow4,4000);
         setTimeout(setime,5000);
+
     }
 
 
@@ -248,6 +248,9 @@ function DisplayScoresBoard() {
 }
 
     DisplayScoresBoard()
+
+
+
 </script>
 </body>
 </html>

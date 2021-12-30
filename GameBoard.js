@@ -8,7 +8,6 @@ class GameBoard {
         this.background = Background;
         this.motor = Motor;
         this.obstacle = obstacle;
-
         this.oil1= oil1;
     }
     startGame(ctx) {
@@ -17,7 +16,6 @@ class GameBoard {
             this.obstacle[i].showObstacle(ctx)
         }
         this.motor.show(ctx)
-
     }
     reload(ctx) {
         this.background.showBackground(ctx)
@@ -63,13 +61,23 @@ class GameBoard {
         let motorY = this.motor.yPosition+MOTOR_HEIGHT/2;
         let dis = Math.sqrt(Math.pow(motorX - oilX, 2) + Math.pow(motorY - oilY, 2));
         if (dis <= 40) {
-           this.getoil(ctx)
             countOil+=1
+            this.getoil(ctx)
         }
     }
     getoil(ctx) {
         this.oil1._x = Math.random() * 385
         this.oil1._y = Math.random() * 20
+
+        if (countOil==1){
+        this.uplever(4)
+        }else if(countOil==5) {
+            this.uplever(5)
+        }else if(countOil==10) {
+            this.uplever(6)
+        }else if(countOil==20) {
+            this.uplever(7)
+        }
         this.oil1.showOil(ctx)
     }
 
@@ -96,6 +104,14 @@ class GameBoard {
             ctx.font = "20px Comic Sans MS";
             ctx.fillText("Obstacle: " + countObs.toString() + "     Oil: " + countOil.toString(), 100, 40);
         }
+    }
+    uplever(stp){
+        this.background._speed=stp
+        this.oil1._speed=stp
+        for (let i=0;i<this.obstacle.length;i++){
+            this.obstacle[i]._speed=stp
+        }
+
     }
 
 }
