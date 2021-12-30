@@ -94,8 +94,8 @@
         let xOil=40+Math.random()*300
         let yOil=30+Math.random()*100
         obstacle1 = new Obstacle(xObstacle1, yObstacle1, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",STEP);
-        obstacleCar1 = new Obstacle(xObstacle2,  yObstacle2, 60, 40,"Rock.png",STEP);
-        obstacleCar2 = new Obstacle(xObstacle3,  yObstacle3, 50, 50,"Bush.png",STEP);
+        obstacleCar1 = new Obstacle(xObstacle2,  yObstacle2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",STEP);
+        obstacleCar2 = new Obstacle(xObstacle3,  yObstacle3, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",STEP);
         motor1 = new Motor(DEFAULT_MOTOR_X_POSITION, DEFAULT_MOTOR_Y_POSITION, DEFAULT_MOTOR_SPEED);
         background1 = new Background(0, 0, STEP);
         let obstacleArr=[obstacle1,obstacleCar1,obstacleCar2 ]
