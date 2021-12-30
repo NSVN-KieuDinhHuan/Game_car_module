@@ -17,7 +17,7 @@ class Motor {
                 }
                 break;
             case 40:
-                if (this.yPosition < 550) {
+                if (this.yPosition < 600) {
                     this.yPosition += this.speed;
                 }
                 break;
