@@ -33,11 +33,14 @@
     const DEFAULT_MOTOR_X_POSITION = 200;
     const DEFAULT_MOTOR_Y_POSITION = 550;
     const DEFAULT_MOTOR_SPEED = 20;
-    const SPEED=3
-
+    const SPEED=2
+    const DOWN=40
+    const UP=38
+    const LEFT=37
+    const RIGHT=39
 
     let oilImage= "oil.png"
-    let ctx
+    let ctx //canvas
     let countObs // đếm chướng ngại vật
     let countOil // đêm dầu thu thập được
     let  intervalID=-1;
@@ -50,6 +53,7 @@
     let oil1;
     let gameBoard1;
     let player="";
+    let obstacleArr
     function introStartGame() {
         let textStart = "<h1>Obstacle Game</h1>";
         textStart += "<img src='images/3295243.png'><br>"
@@ -95,9 +99,9 @@
         obstacle1 = new Obstacle(xObstacle1, yObstacle1, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",SPEED);
         obstacle2 = new Obstacle(xObstacle2,  yObstacle2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",SPEED);
         obstacle3 = new Obstacle(xObstacle3,  yObstacle3, OBSTACLE_WIDTH, OBSTACLE_HEIGHT,"barrier.png",SPEED);
-        motor1 = new Motor(DEFAULT_MOTOR_X_POSITION, DEFAULT_MOTOR_Y_POSITION, DEFAULT_MOTOR_SPEED);
+        motor1 = new Motor(DEFAULT_MOTOR_X_POSITION, DEFAULT_MOTOR_Y_POSITION, DEFAULT_MOTOR_SPEED,"Car_1_01.png");
         background1 = new Background(0, 0, SPEED);
-        let obstacleArr=[obstacle1,obstacle2,obstacle3 ]
+        obstacleArr=[obstacle1 ]
         oil1= new Oil(xOil, yOil, OIL_WIDTH, OIL_HEIGHT,oilImage,SPEED);
         gameBoard1 = new GameBoard(background1,motor1,obstacleArr,oil1);
         let gameCanvas= `<canvas id="gameCanvas" width="${GAMEBOARD_WIDTH}px" height="${GAMEBOARD_HEIGHT}"></canvas>`
@@ -113,7 +117,7 @@
     }
 
 
-    function countdow1(){
+    function countdow1(imgName){
         let image = new Image()
         image.src = './images/' + "countdown1.png";
         image.onload = function () {
@@ -158,6 +162,8 @@
             cancelAnimationFrame(intervalID)
         }
     }
+
+
 
 function DisplayScoresBoard() {
     let rankLength = localStorage.length

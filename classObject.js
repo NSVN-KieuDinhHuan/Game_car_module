@@ -2,31 +2,33 @@ class Motor {
     xPosititon;
     yPosition;
     speed;
-    constructor(xPosititon, yPosition, speed) {
+    imgCar;
+    constructor(xPosititon, yPosition, speed,imgCar) {
         this.xPosititon = xPosititon;
         this.yPosition = yPosition;
         this.speed = speed;
+        this.imgCar=imgCar
 
     }
 
     move(event) {
         switch (event.which) {
-            case 37:
+            case LEFT:
                 if (this.xPosititon >= 1) {
                     this.xPosititon -= this.speed;
                 }
                 break;
-            case 40:
+            case DOWN:
                 if (this.yPosition < 600) {
                     this.yPosition += this.speed;
                 }
                 break;
-            case 38:
+            case UP:
                 if (this.yPosition > 10) {
                     this.yPosition -= this.speed;
                 }
                 break;
-            case 39:
+            case RIGHT:
                 if (this.xPosititon < 350) {
                     this.xPosititon += this.speed;
                 }
@@ -38,7 +40,7 @@ class Motor {
         let image = new Image()
         let xPosition = this.xPosititon;
         let yPosition = this.yPosition;
-        image.src = './images/' + "Car_1_01.png";
+        image.src = './images/' + this.imgCar;
         image.onload = function () {
             ctx.drawImage(image, xPosition, yPosition, MOTOR_WIDTH, MOTOR_HEIGHT);
         }
@@ -87,7 +89,7 @@ class Background {
     moveBackground() {
         this.yPosition += this.speed;
         if (this.yPosition >= 0) {
-            this.yPosition = -150;
+            this.yPosition = -100;
         }
     }
 
